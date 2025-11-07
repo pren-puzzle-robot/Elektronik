@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "MK22FN512VDC12")(type "KiCad")(uri "${KIPRJMOD}/Symbole/MK22NF512/MK22FN512VDC12.kicad_sym")(options "")(descr ""))
+)

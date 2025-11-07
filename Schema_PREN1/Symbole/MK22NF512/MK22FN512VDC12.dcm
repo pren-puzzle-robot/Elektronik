@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP MK22FN512VDC12
+D ARM Cortex-M4 Kinetis K20 Microcontroller IC 32-Bit Single-Core 120MHz 512KB (512K x 8) FLASH 121-XFBGA (8x8)
+K
+F http://www.nxp.com/docs/en/data-sheet/K22P121M120SF7.pdf
+$ENDCMP
+#
+#End Doc Library
