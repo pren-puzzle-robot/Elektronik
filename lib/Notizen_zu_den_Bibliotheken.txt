@@ -1,0 +1,15 @@
+*** Bibliotheken des APROG_HAT KiCad Projektes ***
+
+Für das Cape_APROG KiCad Projekt werden nur 2 Bibliotheken benötigt (Verzeichnis HAT/lib):
+APROG_Symbols.lib und APROG_Footprints.pretty
+
+APROG_Symbols.lib
+Die Bibliothek beinhaltet alle Symbole des Schemas.
+Dies ist ein Text-File. Die einzelnen Symbole sind die Einträge zwischen "DEF" und "ENDDEF"
+
+APROG_Footprints.pretty
+Die Bibliothek beinhaltet alle Footprints des Layouts.
+Die Bibliothek ist ein Ordner. Die einzelnen Footprints sind .kicad_mod Files.
+
+Wird ein neues Symbol/Footprint benötigt welches noch nicht in der Bibliothek vorhanden ist, im entsprechenden Editor das Symbol/Footprint zur bestehenden Bibliothek hinzufügen. 
+
