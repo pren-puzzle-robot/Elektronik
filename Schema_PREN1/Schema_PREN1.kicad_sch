@@ -3,7 +3,13 @@
 	(generator "eeschema")
 	(generator_version "9.0")
 	(uuid "351d91f6-2f9f-466b-899e-ac962da3a5e5")
-	(paper "A4")
+	(paper "A3")
+	(title_block
+		(title "PREN Schema Puzzle Roboter Gruppe 13")
+		(date "2025-11-29")
+		(rev "0")
+		(company "Hochschule Luzern")
+	)
 	(lib_symbols
 		(symbol "APROG_Symbols:tinyK22"
 			(pin_names
@@ -792,10 +798,406 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector_Generic:Conn_01x04"
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x04"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x04_1_1"
+				(rectangle
+					(start -1.27 3.81)
+					(end 1.27 -6.35)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(rectangle
+					(start -1.27 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -4.953)
+					(end 0 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at -5.08 2.54 0)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 0 0)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -2.54 0)
+					(length 3.81)
+					(name "Pin_3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -5.08 0)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(wire
+		(pts
+			(xy 292.1 41.91) (xy 311.15 41.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "06797923-3f1f-4d56-8beb-36f307599032")
+	)
+	(wire
+		(pts
+			(xy 360.68 45.72) (xy 381 45.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0b2d3adc-4270-40eb-a44b-8c21e5fb9814")
+	)
+	(wire
+		(pts
+			(xy 360.68 48.26) (xy 381 48.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1f9e2bba-3393-4619-88ce-2b93079f8985")
+	)
+	(wire
+		(pts
+			(xy 292.1 44.45) (xy 311.15 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "253a4fbd-2296-4a6a-8cf0-77289eb59044")
+	)
+	(wire
+		(pts
+			(xy 219.71 41.91) (xy 238.76 41.91)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "34d49974-6b0a-4757-a7f8-59f6b18b5d83")
+	)
+	(wire
+		(pts
+			(xy 219.71 39.37) (xy 238.76 39.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "484f8c07-f13e-49d4-b2ba-b743344450b9")
+	)
+	(wire
+		(pts
+			(xy 219.71 44.45) (xy 238.76 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "516c0dd7-f860-4106-8620-6c6e0d157ebe")
+	)
+	(wire
+		(pts
+			(xy 219.71 46.99) (xy 238.76 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55b5c8dd-f21d-4aa7-bf67-6db04d5059f9")
+	)
+	(wire
+		(pts
+			(xy 360.68 40.64) (xy 381 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8a5cadc0-e8bb-43c0-86b0-ac33d5506387")
+	)
+	(wire
+		(pts
+			(xy 292.1 46.99) (xy 311.15 46.99)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a6d84eb4-de4b-4e89-a981-8cc3f41e20d7")
+	)
+	(wire
+		(pts
+			(xy 292.1 39.37) (xy 311.15 39.37)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ad17dd59-2ef6-4ef7-aabe-837314aa14d8")
+	)
+	(wire
+		(pts
+			(xy 360.68 43.18) (xy 381 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dae88318-a5fe-4dc6-ba12-433fd13a9306")
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 243.84 41.91 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "01ad9518-01c8-4759-a762-f66438193463")
+		(property "Reference" "StepperRot"
+			(at 246.38 41.9099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x04"
+			(at 246.38 44.4499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 243.84 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 243.84 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 243.84 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "0b07e7f5-184a-42e8-9bc4-dbe78f2db286")
+		)
+		(pin "2"
+			(uuid "2f213c50-363d-48fa-8597-6755c1e63603")
+		)
+		(pin "3"
+			(uuid "79792287-e467-41a7-9a2c-919c123ba2b6")
+		)
+		(pin "1"
+			(uuid "1f215033-8c11-4d20-b75d-3a02a4aec769")
+		)
+		(instances
+			(project "Schema_PREN1"
+				(path "/351d91f6-2f9f-466b-899e-ac962da3a5e5"
+					(reference "StepperRot")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "APROG_Symbols:tinyK22")
-		(at 88.9 106.68 0)
+		(at 90.17 110.49 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -804,7 +1206,7 @@
 		(fields_autoplaced yes)
 		(uuid "060507e9-7162-4e68-baa9-be89d35b5e06")
 		(property "Reference" "U1"
-			(at 86.36 63.5 0)
+			(at 87.63 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -812,7 +1214,7 @@
 			)
 		)
 		(property "Value" "tinyK22"
-			(at 86.36 66.04 0)
+			(at 87.63 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -820,7 +1222,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 88.9 106.68 0)
+			(at 90.17 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -829,7 +1231,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 88.9 106.68 0)
+			(at 90.17 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -838,7 +1240,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 88.9 106.68 0)
+			(at 90.17 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -971,6 +1373,791 @@
 				(path "/351d91f6-2f9f-466b-899e-ac962da3a5e5"
 					(reference "U1")
 					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 386.08 43.18 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3cf1ea3a-582d-4290-bdae-873526e534e9")
+		(property "Reference" "StepperX"
+			(at 388.62 43.1799 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x04"
+			(at 388.62 45.7199 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 386.08 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 386.08 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 386.08 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "173b89d1-e073-48cd-8f46-0bfd190dfc43")
+		)
+		(pin "2"
+			(uuid "119049fe-aef3-4604-b071-597810d72441")
+		)
+		(pin "3"
+			(uuid "8a773ef3-bcce-46ec-9b65-4fda10dfd728")
+		)
+		(pin "1"
+			(uuid "376e2540-6173-4083-8bff-3b5eb7504cd4")
+		)
+		(instances
+			(project ""
+				(path "/351d91f6-2f9f-466b-899e-ac962da3a5e5"
+					(reference "StepperX")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 316.23 41.91 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3fccca1b-f0fc-4a16-9029-844946abd9be")
+		(property "Reference" "StepperY"
+			(at 318.77 41.9099 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Conn_01x04"
+			(at 318.77 44.4499 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 316.23 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 316.23 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 316.23 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "4"
+			(uuid "9581bcb7-98e1-4544-8d6b-9d09dc08f9d2")
+		)
+		(pin "2"
+			(uuid "9d26e499-562e-4788-9591-13cf0f8c2655")
+		)
+		(pin "3"
+			(uuid "696125e1-26e1-4629-84bb-49b044d4b70b")
+		)
+		(pin "1"
+			(uuid "02de14bc-dc5e-4772-b90d-f50b755da6b8")
+		)
+		(instances
+			(project "Schema_PREN1"
+				(path "/351d91f6-2f9f-466b-899e-ac962da3a5e5"
+					(reference "StepperY")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(sheet
+		(at 335.28 29.21)
+		(size 25.4 33.02)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "43fe55d9-7c47-45bc-8968-ae339703bd7d")
+		(property "Sheetname" "TMC2209_SilentStepStick"
+			(at 335.28 28.4984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "untitled.kicad_sch"
+			(at 335.534 62.992 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "DIAG" input
+			(at 335.28 57.15 180)
+			(uuid "48fd6540-a813-4d9a-913b-b646fbe2a68a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Dir" input
+			(at 335.28 30.48 180)
+			(uuid "f509bd97-6ceb-4056-b743-d99c97592088")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "EN" input
+			(at 335.28 45.72 180)
+			(uuid "531ee68d-cb11-4440-b519-51936e70660e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "GND" input
+			(at 347.98 62.23 270)
+			(uuid "bc65dba9-6a82-45f9-b173-32ad59e971ca")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "INDEX" input
+			(at 335.28 54.61 180)
+			(uuid "2a046f34-e8b8-478e-9917-b03603ab996b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "M1A" output
+			(at 360.68 40.64 0)
+			(uuid "20d4e1e1-ab19-4167-9edc-31410a560f48")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "M1B" output
+			(at 360.68 43.18 0)
+			(uuid "0a843469-96d0-4bbf-a1c0-1cb7889d3180")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "M2A" output
+			(at 360.68 45.72 0)
+			(uuid "ae349920-ee12-432c-ab69-4d04ac0a16d7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "M2B" output
+			(at 360.68 48.26 0)
+			(uuid "98d8c691-b248-4787-baed-a8c4b3edb03e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MS1" input
+			(at 335.28 49.53 180)
+			(uuid "3529ae9f-5664-455e-b2fe-ccecbf16da46")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MS2" input
+			(at 335.28 52.07 180)
+			(uuid "307fec82-1b30-43d7-9b9b-cec74d76355b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "PDN" input
+			(at 335.28 40.64 180)
+			(uuid "a16bb869-0789-4b4a-acd3-90f6fc8a4744")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SPRD" input
+			(at 335.28 43.18 180)
+			(uuid "97a9e7e6-3982-4479-b2dc-17861a30c4b4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Step" input
+			(at 335.28 33.02 180)
+			(uuid "86d593e3-51bc-47c2-888b-6d34dcb20d89")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "UART" input
+			(at 335.28 38.1 180)
+			(uuid "4d6dc7e6-3742-46d0-9cf1-2281d658ce17")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VIO" input
+			(at 350.52 29.21 90)
+			(uuid "c8945085-9113-43a6-a6eb-efa9eff037ca")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VM" output
+			(at 347.98 29.21 90)
+			(uuid "8f360e8d-fac1-479a-b184-bebc0f18198c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Schema_PREN1"
+				(path "/351d91f6-2f9f-466b-899e-ac962da3a5e5"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 266.7 27.94)
+		(size 25.4 33.02)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "93a8d76c-86f9-4445-a86a-6625591500de")
+		(property "Sheetname" "TMC2209_SilentStepStick1"
+			(at 266.7 27.2284 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "untitled.kicad_sch"
+			(at 266.954 61.722 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "DIAG" input
+			(at 266.7 55.88 180)
+			(uuid "004f10b2-1742-4862-988f-b2e8464d42a5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Dir" input
+			(at 266.7 29.21 180)
+			(uuid "4e66cf9c-651a-4022-9a73-e5d3694173a0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "EN" input
+			(at 266.7 44.45 180)
+			(uuid "3fb6761f-40f0-4b3c-b276-08a8eec4031e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "GND" input
+			(at 279.4 60.96 270)
+			(uuid "8f6cdcaa-f4fd-4818-aa36-8104f6cb512c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "INDEX" input
+			(at 266.7 53.34 180)
+			(uuid "41341d27-0807-4992-af29-a474053109f9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "M1A" output
+			(at 292.1 39.37 0)
+			(uuid "ec390508-449d-496d-97fc-5e0b75140737")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "M1B" output
+			(at 292.1 41.91 0)
+			(uuid "90a225cc-4921-4a2c-89ee-8012096337b2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "M2A" output
+			(at 292.1 44.45 0)
+			(uuid "1b9388c2-f59f-4080-bd91-bc1438de7283")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "M2B" output
+			(at 292.1 46.99 0)
+			(uuid "bc00f3d5-5f36-449d-a270-418d5e0ec7d7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MS1" input
+			(at 266.7 48.26 180)
+			(uuid "d1cce793-94d0-491a-9f56-289c3657edb2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MS2" input
+			(at 266.7 50.8 180)
+			(uuid "de16a5f1-5cc7-4724-8d43-bb48caea435e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "PDN" input
+			(at 266.7 39.37 180)
+			(uuid "527c0c30-258a-4b7c-b83e-de8e6e9132e1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SPRD" input
+			(at 266.7 41.91 180)
+			(uuid "14f2ba26-19bd-4d2c-95b0-436a18a960fd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Step" input
+			(at 266.7 31.75 180)
+			(uuid "c303dc42-0a89-4958-aa09-5d5a3442f70c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "UART" input
+			(at 266.7 36.83 180)
+			(uuid "fcfe1e62-fe27-42af-8266-b6a65c88d8d3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VIO" input
+			(at 281.94 27.94 90)
+			(uuid "ab92b0fb-77b9-43a5-9e07-d0455ff4eb99")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VM" output
+			(at 279.4 27.94 90)
+			(uuid "e1ab47e4-d84c-448e-b2ef-25d6eef6199c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Schema_PREN1"
+				(path "/351d91f6-2f9f-466b-899e-ac962da3a5e5"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 194.31 27.94)
+		(size 25.4 33.02)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "bbb77b36-8d2d-4434-9f7d-d1e1043b8ac8")
+		(property "Sheetname" "TMC2209_SilentStepStick2"
+			(at 194.31 27.2284 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "untitled.kicad_sch"
+			(at 194.564 61.722 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "DIAG" input
+			(at 194.31 55.88 180)
+			(uuid "df9277ef-0d96-4f6f-8b5a-34dbe3207c07")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Dir" input
+			(at 194.31 29.21 180)
+			(uuid "4a4a18bf-16b1-4fa9-9031-7855b3bb1ff3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "EN" input
+			(at 194.31 44.45 180)
+			(uuid "90aa996a-ecf3-4ddf-b7c9-2156bd876ba4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "GND" input
+			(at 207.01 60.96 270)
+			(uuid "4743dd68-928d-4aeb-8a5d-e0ac803b7b18")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "INDEX" input
+			(at 194.31 53.34 180)
+			(uuid "4e46ef9c-a597-4b16-aeee-b7e086d37353")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "M1A" output
+			(at 219.71 39.37 0)
+			(uuid "daef4561-d325-4fe3-a668-506c55be595c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "M1B" output
+			(at 219.71 41.91 0)
+			(uuid "902c6aba-9500-41f8-a0c5-9aef595c6fe4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "M2A" output
+			(at 219.71 44.45 0)
+			(uuid "6fe32294-eba5-495e-9c6f-7e5ad2202333")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "M2B" output
+			(at 219.71 46.99 0)
+			(uuid "77f192cb-bf05-445e-b6bd-af6f0c05cbb9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "MS1" input
+			(at 194.31 48.26 180)
+			(uuid "e444d49e-a264-44a3-9dad-ecc0089feb3c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "MS2" input
+			(at 194.31 50.8 180)
+			(uuid "37ae02dc-6e24-4a53-8be0-b493be1eab54")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "PDN" input
+			(at 194.31 39.37 180)
+			(uuid "649421df-1dc2-43cc-b03e-9a9ac28f12dc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "SPRD" input
+			(at 194.31 41.91 180)
+			(uuid "71fa4344-f941-445d-91cf-e7b916ed0c19")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "Step" input
+			(at 194.31 31.75 180)
+			(uuid "c3de69b3-30aa-47d2-b486-674474d7d338")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "UART" input
+			(at 194.31 36.83 180)
+			(uuid "a034ef91-ce49-48e6-85b0-cc19c2c3442d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "VIO" input
+			(at 209.55 27.94 90)
+			(uuid "9923954e-204a-4544-9bc0-b5974c0cd9c2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "VM" output
+			(at 207.01 27.94 90)
+			(uuid "b5ee8b4c-9caf-43f7-8447-0ab70176ceb8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "Schema_PREN1"
+				(path "/351d91f6-2f9f-466b-899e-ac962da3a5e5"
+					(page "4")
 				)
 			)
 		)
