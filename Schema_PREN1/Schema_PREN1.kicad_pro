@@ -415,15 +415,15 @@
     ],
     [
       "43fe55d9-7c47-45bc-8968-ae339703bd7d",
-      "TMC2209_SilentStepStick"
+      "TMC2209_SilentStepStickRot"
     ],
     [
       "93a8d76c-86f9-4445-a86a-6625591500de",
-      "TMC2209_SilentStepStick1"
+      "TMC2209_SilentStepStickY"
     ],
     [
       "bbb77b36-8d2d-4434-9f7d-d1e1043b8ac8",
-      "TMC2209_SilentStepStick2"
+      "TMC2209_SilentStepStickX"
     ]
   ],
   "text_variables": {}
