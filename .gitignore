@@ -39,3 +39,33 @@ fp-info-cache
 *.log
 *.raw
 .svg2shenzhen-cache/Schema_PREN1/Schema_PREN1-backups/
+
+# --- MCUXpresso / Eclipse ---
+.metadata/
+RemoteSystemsTempFiles/
+*.launch
+
+# Project-local Eclipse caches
+.settings/org.eclipse.cdt.core.prefs
+.settings/language.settings.xml
+
+# --- Build output ---
+Debug/
+Release/
+*/Debug/
+*/Release/
+build/
+out/
+
+# --- Compiled artifacts ---
+*.o
+*.a
+*.d
+*.elf
+*.axf
+*.hex
+*.bin
+*.map
+*.lst
+*.srec
+*.su
