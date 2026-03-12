@@ -152,6 +152,19 @@ char uart0ReadChar(void)
   return ch;
 }
 
+uint16_t uart0ReadInfo(void)
+{
+  uint16_t info;
+  while (rxBufCount == 0);
+  info = (rxBuf[rxBufReadPos++])>>8;
+  info = info + rxBuf[rxBufReadPos++];
+  if (rxBufReadPos == UART0_RX_BUF_SIZE) rxBufReadPos = 0;
+  DISABLE_UART0_INTERRUPTS();
+  rxBufCount--;
+  ENABLE_UART0_INTERRUPTS();
+  return info;
+}
+
 /**
  * Reads a null terminated string out of the rxBuf queue. The
  * function blocks until a new Line character has been received
@@ -191,6 +204,14 @@ uint16_t uart0ReadLine(char *str, uint16_t length)
  * @returns
  *   TRUE, if there is a new line character, otherweise FALSE.
  */
+
+bool uart0CmdReceived(void)
+{
+    if (rxBufCount == 0) return FALSE;
+
+  return TRUE;
+}
+
 bool uart0HasLineReceived(void)
 {
   uint16_t i;

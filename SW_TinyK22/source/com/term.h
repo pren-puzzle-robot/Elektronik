@@ -24,10 +24,12 @@ typedef struct commandLineHandler
 } tCommandLineHandler;
 
 void termRegisterCommandLineHandler(tCommandLineHandler *clh, char* cmd, char *cmdDesc, cmdHandler h);
-
 void termWrite(const char *str);
 void termWriteNum32s(int32_t value);
 void termWriteNum16s(int16_t value);
+bool termDataAvailable(void);
+void termWriteChar(char ch);
+bool getCmd(void);
 
 void termWriteLine(const char *str);
 void termDoWork(void);

@@ -496,6 +496,7 @@ void ResetISR(void) {
 
     // Reenable interrupts
     __asm volatile ("cpsie i");
+   // __asm("BKPT #0");
 
 #if defined (__REDLIB__)
     // Call the Redlib library, which in turn calls main()
@@ -509,7 +510,7 @@ void ResetISR(void) {
     // main() shouldn't return, but if it does, we'll just enter an infinite loop
     //
     while (1) {
-        ;
+    	__asm("BKPT #0");
     }
 }
 

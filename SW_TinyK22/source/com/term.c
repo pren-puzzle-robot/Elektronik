@@ -46,22 +46,24 @@ void termRegisterCommandLineHandler(tCommandLineHandler *clh, char* cmd, char *c
  * @param[in] ch
  *   the character to send
  */
+
+
+bool getCmd(void){
+	char cmd;
+	cmd = uart0ReadChar();
+	return TRUE;
+}
 void termWriteChar(char ch)
 {
-  if (TGT_IS_MCCAR)
+  if (PLATFORM == RASPY)
   {
     // check if uart0 is enabled
     #if (UART0_EN)
       if (destination & uart0) uart0WriteChar(ch);
     #endif
-
-    // check if lpuart0 is enabled
-    #if (LPUART0_EN)
-      if (destination & lpuart0) lpuart0WriteChar(ch);
-    #endif
   }
 
-  if (TGT_IS_TINYK22)
+  if (PLATFORM == PC_DEV)
   {
     // check if uart1 is enabled
     #if (UART1_EN)
@@ -77,6 +79,7 @@ void termWriteChar(char ch)
  * @param[in] str
  *   the null terminated string to send
  */
+
 void termWrite(const char *str)
 {
   if (str == NULL) return;
@@ -142,7 +145,7 @@ void termParseCommand(char *cmd)
   if (strcmp(cmd, "help") == 0)
   {
     termWriteLine(NULL);
-    termWriteLine(">>> MC-Car v2 terminal ready <<<");
+    termWriteLine(">>> TinyK22 terminal ready <<<");
     termWriteLine("valid commands are:");
     while(clh != NULL)
     {
@@ -189,10 +192,17 @@ void termParseCommand(char *cmd)
  * This function reads a line from the uart and calls the
  * termParseCommand function to process the command.
  */
+
+bool termDataAvailable(void){
+	return uart0CmdReceived();
+}
+
+
+
 void termDoWork(void)
 {
   char cmd[512];
-  if (TGT_IS_MCCAR)
+  if (PLATFORM == RASPY)
   {
     #if (UART0_EN)
       if (uart0HasLineReceived())
@@ -202,18 +212,9 @@ void termDoWork(void)
         termParseCommand(cmd);
       }
     #endif
-
-    #if (LPUART0_EN)
-      if (lpuart0HasLineReceived())                 // process uart data from bluetooth interface
-      {
-        destination = lpuart0;
-        lpuart0ReadLine(cmd, sizeof(cmd));
-        termParseCommand(cmd);
-      }
-    #endif
   }
 
-  if (TGT_IS_TINYK22)
+  if (PLATFORM == PC_DEV)
   {
     #if (UART1_EN)
       if (uart1HasLineReceived())                   // process uart data from debug interface
@@ -237,30 +238,25 @@ void termInit(uint16_t baudrate)
   // Send the first message to all uarts
   destination = uartAll;
 
-  if (TGT_IS_MCCAR)
+  if (PLATFORM == RASPY)
   {
     // initialize uart0 only if the uart is enabled
     #if (UART0_EN)
       uart0Init(baudrate);
     #endif
 
-    // initialize lpuart0 only if the uart is enabled
-    #if (LPUART0_EN)
-      lpuart0Init(baudrate);
-    #endif
-
     termWriteLine(NULL);
-    termWriteLine("MC-Car ready... :-)");
+    termWriteLine("UART0 ready");
   }
 
-  if (TGT_IS_TINYK22)
+  if (PLATFORM == PC_DEV)
   {
     // initialize uart1 only if the uart is enabled
     #if (UART1_EN)
       uart1Init(baudrate);
     #endif
     termWriteLine(NULL);
-    termWriteLine("tinyk22 ready... :-)");
+    termWriteLine("UART1 ready");
   }
 }
 

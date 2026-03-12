@@ -1,8 +1,4 @@
-//         __  ___   ______   ______   __  __    _   __
-//        /  |/  /  / ____/  / ____/  / / / /   / | / /
-//       / /|_/ /  / /      / /_     / / / /   /  |/ /
-//      / /  / /  / /___   / __/    / /_/ /   / /|  /
-//     /_/  /_/   \____/  /_/       \____/   /_/ |_/
+
 //     (c) Hochschule Luzern T&A  ==== www.hslu.ch ====
 //
 //     \brief   Buzzer driver to generate different frequencies

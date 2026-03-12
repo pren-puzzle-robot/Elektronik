@@ -16,16 +16,13 @@
 #include "MK22F51212.h"
 #include <stdbool.h>
 
-
-#define MC_CAR                            1
-#define TINYK22                           2
-#define AUTO                              (MC_CAR | TINYK22)
-#define SOLUTION                          0
+#define RASPY                              1
+#define PC_DEV                             2
 
 // ====================================================================================================================
 // Configuration
 // ====================================================================================================================
-#define PLATFORM                        AUTO   // [TINYK22|MC_CAR|AUTO] select target platform
+#define PLATFORM                        RASPY   // [PC_DEV|RASPY] select target platform
 #define DEBUG_LED                          0   // [1|0] enable/disable green debug led of the MC-CAR
 
 #define TERMINAL_BAUDRATE              57600
@@ -39,10 +36,6 @@
 #define CORECLOCK                  120000000  // 120 MHZ (CPU, UART0, UART1)
 #define BUSCLOCK                    60000000  // 60 MHz
 #define FIXED_SYSTEM_CLOCK            250000  // 250 kHz
-
-
-#define TGT_IS_MCCAR                        ((SIM->SDID & SIM_SDID_PINID_MASK) == 0x08) // 100-pin
-#define TGT_IS_TINYK22                      ((SIM->SDID & SIM_SDID_PINID_MASK) == 0x05) // 64-pin
 
 #define NULL                     ((void *)0)
 #define TRUE                               1

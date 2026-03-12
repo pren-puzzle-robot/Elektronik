@@ -1,8 +1,4 @@
-//         __  ___   ______   ______   __  __    _   __
-//        /  |/  /  / ____/  / ____/  / / / /   / | / /
-//       / /|_/ /  / /      / /_     / / / /   /  |/ /
-//      / /  / /  / /___   / __/    / /_/ /   / /|  /
-//     /_/  /_/   \____/  /_/       \____/   /_/ |_/
+
 //     (c) Hochschule Luzern T&A  ==== www.hslu.ch ====
 //
 //     \brief   Buzzer driver to generate different frequencies
@@ -17,7 +13,6 @@
 #include "term.h"
 #include "util.h"
 
-#if !SOLUTION
 
 static uint16_t tmrFrequencyTicks;                    // number of timer ticks to generate the desired frequency
 static uint32_t tmrPlayTimeTicks;                     // number of timer ticks to play the frequency (duration)
@@ -168,4 +163,3 @@ void soundInit(void)
   // register terminal command line handler
   termRegisterCommandLineHandler(&clh, "snd", "(sound)", soundParseCommand);
 }
-#endif

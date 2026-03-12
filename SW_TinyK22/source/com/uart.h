@@ -35,21 +35,22 @@
 #define LPUART0_TX_BUF_SIZE     512     // size of the transmit buffer in bytes
 
 
-#if ((PLATFORM & TINYK22) == 0)
+#if ((PLATFORM & PC_DEV) == 0)
 #undef UART1_EN
 #endif
 
-#if ((PLATFORM & MC_CAR) == 0)
+#if ((PLATFORM & RASPY) == 0)
 #undef UART0_EN
-#undef LPUART0_EN
 #endif
 
-
 void uart0WriteChar(char ch);
+char uart0ReadChar(void);
+uint16_t uart0ReadInfo(void);
+
 void uart0Write(const char *str);
 void uart0WriteLine(const char *str);
-char uart0ReadChar(void);
 uint16_t uart0ReadLine(char *str, uint16_t length);
+bool uart0CmdReceived(void);
 bool uart0HasLineReceived(void);
 uint16_t uart0RxBufCount(void);
 void uart0Init(uint16_t baudrate);
