@@ -47,12 +47,6 @@ void termRegisterCommandLineHandler(tCommandLineHandler *clh, char* cmd, char *c
  *   the character to send
  */
 
-
-bool getCmd(void){
-	char cmd;
-	cmd = uart0ReadChar();
-	return TRUE;
-}
 void termWriteChar(char ch)
 {
   if (PLATFORM == RASPY)
@@ -245,8 +239,8 @@ void termInit(uint16_t baudrate)
       uart0Init(baudrate);
     #endif
 
-    termWriteLine(NULL);
-    termWriteLine("UART0 ready");
+    //termWriteLine(NULL);
+    //termWriteLine("UART0 ready");
   }
 
   if (PLATFORM == PC_DEV)

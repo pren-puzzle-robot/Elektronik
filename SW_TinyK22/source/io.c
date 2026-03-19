@@ -28,17 +28,32 @@ void setPump(bool state)
 
 bool btnPosFlank(void)
 {
-    static bool lastState = false;
-    bool currentState;
+    static bool lastStableState = false;
+    static bool lastRawState = false;
+    static uint8_t debounceCnt = 0;
+
+    bool rawState;
     bool flank = false;
 
-    currentState = (GPIOC->PDIR & (1 << 8)) != 0;
+    rawState = (GPIOC->PDIR & (1 << 8)) != 0;
 
-    if (!lastState && currentState)
+    if (rawState != lastRawState)
     {
-        flank = true;
+        debounceCnt = 5;          // Entprellzeit (Anzahl Aufrufe)
+        lastRawState = rawState;
     }
-    lastState = currentState;
+    else if (debounceCnt > 0)
+    {
+        debounceCnt--;
+        if (debounceCnt == 0)
+        {
+            if (!lastStableState && rawState)
+            {
+                flank = true;     // positive Flanke erkannt
+            }
+            lastStableState = rawState;
+        }
+    }
 
     return flank;
 }
@@ -49,22 +64,21 @@ bool btnPosFlank(void)
  */
 void ioInit(void)
 {
-	SIM->SCGC5 |= SIM_SCGC5_PORTC_MASK;
-	SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
-  PORTC->PCR[2] = PORT_PCR_MUX(1);  // MUX PTC2 as GPIO pin (tinyK22 led blue)
+  SIM->SCGC5 |= SIM_SCGC5_PORTC_MASK;
+  SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
   PORTC->PCR[8] |=PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//button
-  PORTC->PCR[9] = PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//swX
-  PORTC->PCR[10] = PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//swY
-  PORTC->PCR[11] = PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//V_24V
+  PORTC->PCR[9] |= PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//swX
+  PORTC->PCR[10] |= PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//swY
+  PORTC->PCR[11] |= PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//V_24V
 
   PORTD->PCR[3] = PORT_PCR_MUX(1);	//pump
-  PORTD->PCR[6] = PORT_PCR_MUX(1);	//ventil
+  //PORTD->PCR[6] = PORT_PCR_MUX(1);	//valve
   PORTD->PCR[7] = PORT_PCR_MUX(1);	//solenoid
 
   GPIOC->PDDR |= (1<<2);            // port direction as output
-  GPIOD->PDDR |= 0b11001000;        // port direction as output
+  GPIOD->PDDR |= 0b11001000;
 
-  GPIOC->PDDR &= ~(1 << 8);
+  GPIOC->PDDR &= ~(1 << 8);			// port direction as input
   GPIOC->PDDR &= ~(1 << 9);
   GPIOC->PDDR &= ~(1 << 10);
   GPIOC->PDDR &= ~(1 << 11);

@@ -13,6 +13,8 @@
 #ifndef SOURCES_TERM_H_
 #define SOURCES_TERM_H_
 
+#include <stdbool.h>
+
 typedef tError (*cmdHandler)(const char *cmd);
 
 typedef struct commandLineHandler
@@ -29,7 +31,6 @@ void termWriteNum32s(int32_t value);
 void termWriteNum16s(int16_t value);
 bool termDataAvailable(void);
 void termWriteChar(char ch);
-bool getCmd(void);
 
 void termWriteLine(const char *str);
 void termDoWork(void);

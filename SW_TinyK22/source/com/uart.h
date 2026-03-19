@@ -13,6 +13,9 @@
 #ifndef SOURCES_UART_H_
 #define SOURCES_UART_H_
 
+#include <stdbool.h>
+#include <stdint.h>
+
 #define NEW_LINE                '\n'
 
 

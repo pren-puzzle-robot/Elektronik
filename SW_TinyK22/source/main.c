@@ -4,10 +4,9 @@
 //     \date    12.03.2026
 //     ------------------------------------------------
 
-#include <io.h>
 #include "platform.h"
 #include "term.h"
-#include "led.h"
+#include "cmd.h"
 
 
 typedef enum {
@@ -22,37 +21,29 @@ typedef enum {
 state_t state = INIT;
 
 
-
-bool processCmd(void){;}
-
 int main(void)
 {
 	while(TRUE)
 	{
 
-		switch(state)
+	switch(state)
 		{
 			case INIT:	// initialize hardware
 				termInit(57600);
-				ledInit();
-				ioInit();
+				cmdInit();
 				state = RESET;
 				break;
 
 			case RESET:
 				// reset and calibrate system
 				//resetSystem();
-				setPump(on);
-				setSolenoid(down);
 				state = START;
 				break;
 
 			case START: // wait for start
 
-				if (btnPosFlank())
+				if (cmdStart())
 				{
-
-					ledSetOff();
 					termWriteChar('S');
 					state = IDLE;
 				}
