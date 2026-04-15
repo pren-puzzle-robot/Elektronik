@@ -154,18 +154,7 @@ char uart0ReadChar(void)
 
 uint16_t uart0ReadInfo(void)
 {
-  uint16_t info;
-  if  (rxBufCount == 0)
-	  return 0;
-  else{
-	  info = (rxBuf[rxBufReadPos++])>>8;
-	  info = info + rxBuf[rxBufReadPos++];
-	  if (rxBufReadPos == UART0_RX_BUF_SIZE) rxBufReadPos = 0;
-	  DISABLE_UART0_INTERRUPTS();
-	  rxBufCount--;
-	  ENABLE_UART0_INTERRUPTS();
-	  return info;
-  }
+    return ((uint16_t)uart0ReadChar() << 8) | uart0ReadChar();
 }
 
 /**

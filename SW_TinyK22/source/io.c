@@ -8,8 +8,24 @@
  */
 #include <io.h>
 #include "platform.h"
+#include "motor.h"
 
 #if !SOLUTION
+
+void PORTC_IRQHandler(void)
+{
+    if (PORTC->ISFR & (1u << 9))
+    {
+        PORTC->ISFR = (1u << 9);
+        motorStop(MOTOR_X);
+    }
+
+    if (PORTC->ISFR & (1u << 10))
+    {
+        PORTC->ISFR = (1u << 10);
+        motorStop(MOTOR_Y);
+    }
+}
 
 void setSolenoid(bool state)
 {
@@ -24,6 +40,14 @@ void setPump(bool state)
 		GPIOD->PSOR |= 1<<3;
 	else
 		GPIOD->PCOR |= 1<<3;
+}
+
+void setValve(bool state)
+{
+    if (state)
+        GPIOD->PSOR |= 1 << 6;
+    else
+        GPIOD->PCOR |= 1 << 6;
 }
 
 bool btnPosFlank(void)
@@ -66,21 +90,26 @@ void ioInit(void)
 {
   SIM->SCGC5 |= SIM_SCGC5_PORTC_MASK;
   SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
+
   PORTC->PCR[8] |=PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//button
-  PORTC->PCR[9] |= PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//swX
-  PORTC->PCR[10] |= PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//swY
+  PORTC->PCR[9]  = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_IRQC(0x9); //swX  (bei pull down: interner pull up | PORT_PCR_PS_MASK | und 0xA falling edge)
+  PORTC->PCR[10] = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_IRQC(0x9); //swY
   PORTC->PCR[11] |= PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//V_24V
 
   PORTD->PCR[3] = PORT_PCR_MUX(1);	//pump
-  //PORTD->PCR[6] = PORT_PCR_MUX(1);	//valve
+  PORTD->PCR[6] = PORT_PCR_MUX(1);	//valve
   PORTD->PCR[7] = PORT_PCR_MUX(1);	//solenoid
 
   GPIOC->PDDR |= (1<<2);            // port direction as output
-  GPIOD->PDDR |= 0b11001000;
+  GPIOD->PDDR |= (1 << 3) | (1 << 6) | (1 << 7);
 
   GPIOC->PDDR &= ~(1 << 8);			// port direction as input
   GPIOC->PDDR &= ~(1 << 9);
   GPIOC->PDDR &= ~(1 << 10);
   GPIOC->PDDR &= ~(1 << 11);
+
+  PORTC->ISFR = (1u << 9) | (1u << 10);
+  NVIC_ClearPendingIRQ(PORTC_IRQn);
+  NVIC_EnableIRQ(PORTC_IRQn);
 }
 #endif

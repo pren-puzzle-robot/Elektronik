@@ -14,6 +14,7 @@
 
 void setSolenoid(bool state);
 void setPump(bool state);
+void setValve(bool state);
 bool btnPosFlank(void);
 void ioInit(void);
 

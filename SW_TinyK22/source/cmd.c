@@ -8,40 +8,97 @@
 #include "motor.h"
 #include "uart.h"
 #include "platform.h"
+#include "stdio.h"
+
+#define MAX_X 10000 		// *10 steps, MS1 = 0, MS2 = 0, 360° -> 200 steps, mm?
+#define MAX_Y 10000			// *10 steps, MS1 = 0, MS2 = 0, 360° -> 200 steps, mm?
+#define MAX_ROT 1600		//MS1 = 1, MS2 = 1, 360° -> 1600 steps
 
 static char cmd;
-static uint16_t coord_x;
-static uint16_t coord_y;
-static uint16_t rot_z;
+
+//current position coordinates (absolute) 0-65535
+static uint16_t x_abs = 0;
+static uint16_t y_abs = 0;
+static int rot_abs = 0;
+//relative coordinates to be moved
+static int x_rel;
+static int y_rel;
+static int rot_rel;
+//ordered coordinates from raspy (absolute)
+static uint16_t x_new;
+static uint16_t y_new;
+static int rot_new;
+
+static uint16_t abs16(int value) //absolute value of int
+{
+    if (value < 0)
+        return (uint16_t)(-value);
+    return (uint16_t)value;
+}
 
 bool getCmd(void){
 
+
 	cmd = uart0ReadChar();
-	if (cmd == 'M' || cmd == 'H' || cmd == 'h' || cmd == 'L' || cmd == 'l' || cmd == 'R')
+	if (cmd == 'H' || cmd == 'h' || cmd == 'L' || cmd == 'l' || cmd == 'R')
 		return TRUE;
+	else if (cmd == 'M'){
+
+		x_new = uart0ReadInfo();
+		y_new = uart0ReadInfo();
+		rot_new = uart0ReadInfo();		//0-360°
+		if (rot_new > 800)				//-180° bis 180°
+			rot_new = rot_new -1600;
+
+		x_rel = x_new - x_abs;
+		y_rel = y_new - y_abs;
+		rot_rel = rot_new - rot_abs;
+
+		return TRUE;
+	}
 	else
 		return FALSE;
 }
 
 bool processCmd(void){
-	if (cmd == 'M')
-		motorStep10();
-	if (cmd == 'H')
+	char str[50]; //will be removed
+	if (cmd == 'M' && !motorBusy()){
+		motorDrive(MOTOR_Y, F_NOM, (abs16(y_rel)*10), (y_rel < 0));
+		motorDrive(MOTOR_X, F_NOM, (abs16(x_rel)*10), (x_rel < 0));
+		motorDrive(MOTOR_ROT, F_NOM, (abs16(rot_rel)), (rot_rel < 0));
+
+		snprintf(str, sizeof(str), "x_rel: %d y_rel: %d z_rel: %d\r\n", x_rel, y_rel, rot_rel); //will be removed
+		uart0Write(str); //will be removed
+
+		x_abs = x_new;
+		y_abs = y_new;
+		rot_abs = rot_new;
+	}
+	if (cmd == 'H'){
 		setPump(on);
-	if (cmd == 'h')
+		setValve(off);
+	}
+	if (cmd == 'h'){
 		setPump(off);
+		setValve(on);
+	}
 	if (cmd == 'L')
 		setSolenoid(up);
 	if (cmd == 'l')
 		setSolenoid(down);
 	if (cmd == 'R')
-		;
-	return TRUE;
+		; //resetSystem();
+
+	if (motorBusy())
+		return FALSE;
+	else
+		return TRUE;
 }
 
 bool cmdStart(void){
 	btnPosFlank();
 }
+
 void cmdInit(void){
 	ioInit();
 	motorInit();

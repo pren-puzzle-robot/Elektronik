@@ -7,6 +7,7 @@
 #include "platform.h"
 #include "term.h"
 #include "cmd.h"
+#include "motor.h" //will be removed
 
 
 typedef enum {
@@ -20,13 +21,13 @@ typedef enum {
 
 state_t state = INIT;
 
-
 int main(void)
 {
 	while(TRUE)
 	{
 
-	switch(state)
+		switch(state)
+
 		{
 			case INIT:	// initialize hardware
 				termInit(57600);
@@ -42,6 +43,7 @@ int main(void)
 
 			case START: // wait for start
 
+				//state = IDLE;
 				if (cmdStart())
 				{
 					termWriteChar('S');
@@ -51,6 +53,10 @@ int main(void)
 
 			case IDLE:
 				// wait for instruction and send ACK
+
+				if (GPIOC->PDIR & (1 << 8))		//will be removed
+						motorDrive(MOTOR_Y, F_NOM, 100, 0);
+
 				if (termDataAvailable())
 				{
 

@@ -239,8 +239,8 @@ void termInit(uint16_t baudrate)
       uart0Init(baudrate);
     #endif
 
-    //termWriteLine(NULL);
-    //termWriteLine("UART0 ready");
+    termWriteLine(NULL);
+    termWriteLine("UART0 ready");
   }
 
   if (PLATFORM == PC_DEV)
