@@ -8,7 +8,9 @@
 #include "term.h"
 #include "cmd.h"
 #include "motor.h" //will be removed
+#include "io.h" //will be removed
 
+int dummy = 1;
 
 typedef enum {
 	    INIT,
@@ -53,6 +55,13 @@ int main(void)
 
 			case IDLE:
 				// wait for instruction and send ACK
+
+				if (cmdStart())
+				{
+					dummy = ~dummy;
+					setSolenoid(dummy);
+				}
+
 
 				if (GPIOC->PDIR & (1 << 8))		//will be removed
 						motorDrive(MOTOR_Y, F_NOM, 100, 0);

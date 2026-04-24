@@ -1,4 +1,3 @@
-
 //     \author  PREN Team 13
 //     \date    12.03.2026
 //     ------------------------------------------------
@@ -29,17 +28,18 @@ void PORTC_IRQHandler(void)
 
 void setSolenoid(bool state)
 {
-	if (state)
-		GPIOD->PSOR |= 1<<7;
-	else
-		GPIOD->PCOR |= 1<<7;
+    if (state)
+        GPIOD->PSOR |= 1 << 7;
+    else
+        GPIOD->PCOR |= 1 << 7;
 }
+
 void setPump(bool state)
 {
-	if (state)
-		GPIOD->PSOR |= 1<<3;
-	else
-		GPIOD->PCOR |= 1<<3;
+    if (state)
+        GPIOD->PSOR |= 1 << 3;
+    else
+        GPIOD->PCOR |= 1 << 3;
 }
 
 void setValve(bool state)
@@ -52,8 +52,8 @@ void setValve(bool state)
 
 bool btnPosFlank(void)
 {
-    static bool lastStableState = false;
-    static bool lastRawState = false;
+    static bool lastStableState = true;
+    static bool lastRawState = true;
     static uint8_t debounceCnt = 0;
 
     bool rawState;
@@ -63,7 +63,7 @@ bool btnPosFlank(void)
 
     if (rawState != lastRawState)
     {
-        debounceCnt = 5;          // Entprellzeit (Anzahl Aufrufe)
+        debounceCnt = 5;
         lastRawState = rawState;
     }
     else if (debounceCnt > 0)
@@ -71,9 +71,9 @@ bool btnPosFlank(void)
         debounceCnt--;
         if (debounceCnt == 0)
         {
-            if (!lastStableState && rawState)
+            if (lastStableState && !rawState)
             {
-                flank = true;     // positive Flanke erkannt
+                flank = true;     // negative Flanke erkannt
             }
             lastStableState = rawState;
         }
@@ -81,7 +81,6 @@ bool btnPosFlank(void)
 
     return flank;
 }
-
 
 /**
  * Initializes digital IOs
@@ -91,19 +90,19 @@ void ioInit(void)
   SIM->SCGC5 |= SIM_SCGC5_PORTC_MASK;
   SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
 
-  PORTC->PCR[8] |=PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//button
-  PORTC->PCR[9]  = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_IRQC(0x9); //swX  (bei pull down: interner pull up | PORT_PCR_PS_MASK | und 0xA falling edge)
-  PORTC->PCR[10] = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_IRQC(0x9); //swY
-  PORTC->PCR[11] |= PORT_PCR_MUX(1)| PORT_PCR_PE_MASK;	//V_24V
+  PORTC->PCR[8]  |= PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK; // button
+  PORTC->PCR[9]   = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_IRQC(0xA); // swX falling edge
+  PORTC->PCR[10]  = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_IRQC(0xA); // swY falling edge
+  PORTC->PCR[11] |= PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK; // V_24V
 
-  PORTD->PCR[3] = PORT_PCR_MUX(1);	//pump
-  PORTD->PCR[6] = PORT_PCR_MUX(1);	//valve
-  PORTD->PCR[7] = PORT_PCR_MUX(1);	//solenoid
+  PORTD->PCR[3] = PORT_PCR_MUX(1); // pump
+  PORTD->PCR[6] = PORT_PCR_MUX(1); // valve
+  PORTD->PCR[7] = PORT_PCR_MUX(1); // solenoid
 
-  GPIOC->PDDR |= (1<<2);            // port direction as output
+  GPIOC->PDDR |= (1 << 2);
   GPIOD->PDDR |= (1 << 3) | (1 << 6) | (1 << 7);
 
-  GPIOC->PDDR &= ~(1 << 8);			// port direction as input
+  GPIOC->PDDR &= ~(1 << 8);
   GPIOC->PDDR &= ~(1 << 9);
   GPIOC->PDDR &= ~(1 << 10);
   GPIOC->PDDR &= ~(1 << 11);
