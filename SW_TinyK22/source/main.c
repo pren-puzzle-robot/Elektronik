@@ -7,10 +7,6 @@
 #include "platform.h"
 #include "term.h"
 #include "cmd.h"
-#include "motor.h" //will be removed
-#include "io.h" //will be removed
-
-int dummy = 1;
 
 typedef enum {
 	    INIT,
@@ -38,9 +34,11 @@ int main(void)
 				break;
 
 			case RESET:
+				state = START; //will be removed
+
 				// reset and calibrate system
-				//resetSystem();
-				state = START;
+				if (resetSystem())
+					state = START;
 				break;
 
 			case START: // wait for start
@@ -58,13 +56,8 @@ int main(void)
 
 				if (cmdStart())
 				{
-					dummy = ~dummy;
-					setSolenoid(dummy);
+					//resetSystem();
 				}
-
-
-				if (GPIOC->PDIR & (1 << 8))		//will be removed
-						motorDrive(MOTOR_Y, F_NOM, 100, 0);
 
 				if (termDataAvailable())
 				{

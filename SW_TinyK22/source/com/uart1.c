@@ -137,6 +137,7 @@ void uart1WriteLine(const char *str)
  * @return
  *   the received byte
  */
+
 char uart1ReadChar(void)
 {
   char ch;
@@ -147,6 +148,11 @@ char uart1ReadChar(void)
   rxBufCount--;
   NVIC_EnableIRQ(UART1_RX_TX_IRQn);
   return ch;
+}
+
+uint16_t uart1ReadInfo(void)
+{
+    return ((uint16_t)uart1ReadChar() << 8) | uart1ReadChar();
 }
 
 /**
@@ -181,6 +187,13 @@ uint16_t uart1ReadLine(char *str, uint16_t length)
   return i;
 }
 
+
+bool uart1CmdReceived(void)
+{
+    if (rxBufCount == 0) return FALSE;
+
+  return TRUE;
+}
 /**
  * This functions checks, if there is a new line character
  * in the rxBuf queue.

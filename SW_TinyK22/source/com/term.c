@@ -188,7 +188,14 @@ void termParseCommand(char *cmd)
  */
 
 bool termDataAvailable(void){
-	return uart0CmdReceived();
+	if (PLATFORM == RASPY)
+	  {
+		return uart0CmdReceived();
+	  }
+	else{
+		return uart1CmdReceived();
+	}
+
 }
 
 

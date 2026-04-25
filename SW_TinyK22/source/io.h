@@ -7,15 +7,14 @@
 
 #include <stdbool.h>
 
-#define on 1
-#define off 0
-#define up 0
-#define down 1
-
 void setSolenoid(bool state);
 void setPump(bool state);
 void setValve(bool state);
-bool btnPosFlank(void);
+bool getSwX0(void);
+bool getSwY0(void);
+bool getSwXEnd(void);
+bool getSwYEnd(void);
+bool btnNegFlank(void);
 void ioInit(void);
 
 #endif /* SOURCES_IO_H_ */

@@ -22,7 +22,7 @@
 // ====================================================================================================================
 // Configuration
 // ====================================================================================================================
-#define PLATFORM                        RASPY   // [PC_DEV|RASPY] select target platform
+#define PLATFORM                        PC_DEV   // [PC_DEV|RASPY] select target platform
 #define DEBUG_LED                          0   // [1|0] enable/disable green debug led of the MC-CAR
 
 #define TERMINAL_BAUDRATE              57600

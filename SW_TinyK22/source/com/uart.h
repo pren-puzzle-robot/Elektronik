@@ -59,10 +59,13 @@ uint16_t uart0RxBufCount(void);
 void uart0Init(uint16_t baudrate);
 
 void uart1WriteChar(char ch);
+char uart1ReadChar(void);
+uint16_t uart1ReadInfo(void);
+
 void uart1Write(const char *str);
 void uart1WriteLine(const char *str);
-char uart1ReadChar(void);
 uint16_t uart1ReadLine(char *str, uint16_t length);
+bool uart1CmdReceived(void);
 bool uart1HasLineReceived(void);
 uint16_t uart1RxBufCount(void);
 void uart1Init(uint16_t baudrate);

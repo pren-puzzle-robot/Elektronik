@@ -4,6 +4,7 @@
 //     ------------------------------------------------
 
 #include "motor.h"
+#include "io.h"
 #include "platform.h"
 #include "ftm0.h"
 #include <stdbool.h>
@@ -73,24 +74,29 @@ static void motorIRQ(tMotor motor)
 {
     volatile tMotorState *m = &motors[motor];
 
+    // channel interrupt flag
     FTM0->CONTROLS[m->channel].CnSC &= ~FTM_CnSC_CHF_MASK;
 
     if (!m->busy)
     {
+    	// disable the channel and force STEP low
         FTM0->CONTROLS[m->channel].CnSC = 0;
         setStepLow(motor);
         m->stepIsHigh = FALSE;
         return;
     }
 
+    // rising edge of STEP
     if (!m->stepIsHigh)
     {
         setStepHigh(motor);
         m->stepIsHigh = TRUE;
+
         FTM0->CONTROLS[m->channel].CnV = FTM0->CNT + STEP_HIGH_TICKS;
     }
     else
     {
+        // falling edge of STEP
         setStepLow(motor);
         m->stepIsHigh = FALSE;
 
@@ -130,6 +136,10 @@ void motorDrive(tMotor motor, uint16_t frequency, uint16_t steps, bool dir)
 
     if (m->busy || frequency < F_MIN || frequency > F_MAX || steps == 0)
         return;
+    if (motor == MOTOR_X && ((!dir && getSwX0()) || (dir && getSwXEnd())))
+        return;
+    if (motor == MOTOR_Y && ((!dir && getSwY0()) || (dir && getSwYEnd())))
+        return;
 
     setDIR(motor, dir);
 
@@ -140,7 +150,10 @@ void motorDrive(tMotor motor, uint16_t frequency, uint16_t steps, bool dir)
 
     setStepLow(motor);
 
+    // output compare, interrupt enabled.
     FTM0->CONTROLS[m->channel].CnSC = FTM_CnSC_MSA_MASK | FTM_CnSC_CHIE_MASK;
+
+    // Trigger the first interrupt
     FTM0->CONTROLS[m->channel].CnV = FTM0->CNT + 1;
 }
 
@@ -156,8 +169,9 @@ void motorStop(tMotor motor)
     m->busy = FALSE;
     m->stepTicks = 0;
     m->stepIsHigh = FALSE;
+
     setStepLow(motor);
-    FTM0->CONTROLS[m->channel].CnSC = 0;
+    FTM0->CONTROLS[m->channel].CnSC = 0; // Disable channel.
 }
 
 /**
@@ -167,6 +181,8 @@ void motorStop(tMotor motor)
 void motorInit(void)
 {
 	ftm0Init();
+
+    // Enable clocks for the used GPIO ports.
     SIM->SCGC5 |= SIM_SCGC5_PORTA_MASK;
     SIM->SCGC5 |= SIM_SCGC5_PORTB_MASK;
     SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
@@ -177,19 +193,19 @@ void motorInit(void)
 	PORTD->PCR[2] = PORT_PCR_MUX(1);
 	GPIOD->PDDR |= (1u << 0) | (1u << 1) | (1u << 2);
 
-    // STEP -> FTM0; CH0. CH1, CH2
+    // STEP -> GPIO, controlled manually by the interrupt routine.
 	PORTB->PCR[3] = PORT_PCR_MUX(1);
 	PORTA->PCR[4] = PORT_PCR_MUX(1);
 	PORTA->PCR[5] = PORT_PCR_MUX(1);
 	GPIOB->PDDR |= (1u << 3);
 	GPIOA->PDDR |= (1u << 4) | (1u << 5);
 
-    // Initialzustand
+    // Set all DIR and STEP outputs to a defined low level.
 	GPIOD->PCOR = (1u << 0) | (1u << 1) | (1u << 2);
 	GPIOA->PCOR = (1u << 4) | (1u << 5);
 	GPIOB->PCOR = (1u << 3);
 
-    // Channel zunächst aus
+    // Disable all used FTM channels initially.
 	FTM0->CONTROLS[STEP_CHANNEL_X].CnSC = 0;
 	FTM0->CONTROLS[STEP_CHANNEL_X].CnV = 0;
 	FTM0->CONTROLS[STEP_CHANNEL_Y].CnSC = 0;
