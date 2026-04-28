@@ -22,15 +22,17 @@ typedef struct
 {
     uint8_t channel;
     volatile uint32_t stepTicks;
+    volatile uint32_t cntSteps; //debug
     volatile uint16_t lowTicks;
     volatile bool busy;
+    volatile bool dir;
     volatile bool stepIsHigh;
 } tMotorState;
 
 static volatile tMotorState motors[3] = {
-    { STEP_CHANNEL_X, 0, 0, FALSE, FALSE },
-    { STEP_CHANNEL_Y, 0, 0, FALSE, FALSE },
-    { STEP_CHANNEL_ROT, 0, 0, FALSE, FALSE }
+    { STEP_CHANNEL_X, 0, 0, 0, FALSE, FALSE, FALSE },
+    { STEP_CHANNEL_Y, 0, 0, 0, FALSE, FALSE, FALSE },
+    { STEP_CHANNEL_ROT, 0, 0, 0, FALSE, FALSE, FALSE }
 };
 
 static inline void setStepHigh(tMotor motor)
@@ -100,8 +102,11 @@ static void motorIRQ(tMotor motor)
         setStepLow(motor);
         m->stepIsHigh = FALSE;
 
-        if (m->stepTicks > 0)
-            m->stepTicks--;
+        if (m->stepTicks > 0){
+        	m->stepTicks--;
+        	m->cntSteps++;   // debug
+        }
+
 
         if (m->stepTicks == 0)
         {
@@ -136,11 +141,12 @@ void motorDrive(tMotor motor, uint16_t frequency, uint16_t steps, bool dir)
 
     if (m->busy || frequency < F_MIN || frequency > F_MAX || steps == 0)
         return;
-    if (motor == MOTOR_X && ((!dir && getSwX0()) || (dir && getSwXEnd())))
+    if (motor == MOTOR_X && ((dir && getSwX0()) || (!dir && getSwXEnd())))
         return;
-    if (motor == MOTOR_Y && ((!dir && getSwY0()) || (dir && getSwYEnd())))
+    if (motor == MOTOR_Y && ((dir && getSwY0()) || (!dir && getSwYEnd())))
         return;
 
+    m->dir = dir;
     setDIR(motor, dir);
 
     m->busy = TRUE;
@@ -159,19 +165,65 @@ void motorDrive(tMotor motor, uint16_t frequency, uint16_t steps, bool dir)
 
 bool motorBusy(void)
 {
-    return motors[MOTOR_X].busy || motors[MOTOR_Y].busy || motors[MOTOR_ROT].busy;
+		return motors[MOTOR_X].busy || motors[MOTOR_Y].busy || motors[MOTOR_ROT].busy;
+}
+
+bool restSteps(void)
+{
+		return motors[MOTOR_X].stepTicks || motors[MOTOR_Y].stepTicks;
 }
 
 void motorStop(tMotor motor)
 {
     volatile tMotorState *m = &motors[motor];
 
-    m->busy = FALSE;
-    m->stepTicks = 0;
-    m->stepIsHigh = FALSE;
-
+    FTM0->CONTROLS[m->channel].CnSC = 0; // disable channel.
     setStepLow(motor);
-    FTM0->CONTROLS[m->channel].CnSC = 0; // Disable channel.
+
+    m->cntSteps = m->cntSteps; //debug
+    m->busy = FALSE;
+    m->stepIsHigh = FALSE;
+}
+
+void PORTC_IRQHandler(void){
+
+    if (PORTC->ISFR & (1u << 9)){
+
+    	PORTC->ISFR = (1u << 9);
+
+        if (getSwX0() && motors[MOTOR_X].dir){
+			motorStop(MOTOR_X);
+		}
+    }
+
+    if (PORTC->ISFR & (1u << 10)){
+
+        PORTC->ISFR = (1u << 10);
+
+        if (getSwY0() && motors[MOTOR_Y].dir){
+			motorStop(MOTOR_Y);
+		}
+    }
+}
+
+void PORTB_IRQHandler(void)
+{
+    if (PORTB->ISFR & (1u << 0)){
+
+    	PORTB->ISFR = (1u << 0);
+
+		if (getSwXEnd() && !(motors[MOTOR_X].dir)){
+			motorStop(MOTOR_X);
+		}
+    }
+
+    if (PORTB->ISFR & (1u << 1)) {
+       PORTB->ISFR = (1u << 1);
+
+       if (getSwYEnd() && !(motors[MOTOR_Y].dir)){
+			motorStop(MOTOR_Y);
+		}
+    }
 }
 
 /**

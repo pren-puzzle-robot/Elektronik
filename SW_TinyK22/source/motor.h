@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define F_NOM 3000
+#define F_NOM 4900
 #define ACC 10
 
 typedef enum
@@ -22,5 +22,6 @@ void motorInit(void);
 void motorDrive(tMotor motor, uint16_t frequency, uint16_t steps, bool dir);
 bool motorBusy(void);
 void motorStop(tMotor motor);
+bool restSteps(void);
 
 #endif /* SOURCES_MOTOR_H_ */

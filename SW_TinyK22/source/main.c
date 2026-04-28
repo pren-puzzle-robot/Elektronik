@@ -7,6 +7,8 @@
 #include "platform.h"
 #include "term.h"
 #include "cmd.h"
+#include "motor.h" //will be removed
+#include "motor.h" //will be removed
 
 typedef enum {
 	    INIT,
@@ -34,16 +36,17 @@ int main(void)
 				break;
 
 			case RESET:
-				state = START; //will be removed
 
 				// reset and calibrate system
-				if (resetSystem())
+				if (resetSystem()){
 					state = START;
+				}
+
+
 				break;
 
 			case START: // wait for start
 
-				//state = IDLE;
 				if (cmdStart())
 				{
 					termWriteChar('S');
@@ -53,10 +56,9 @@ int main(void)
 
 			case IDLE:
 				// wait for instruction and send ACK
-
 				if (cmdStart())
 				{
-					//resetSystem();
+					state = RESET;
 				}
 
 				if (termDataAvailable())
@@ -84,7 +86,6 @@ int main(void)
 				break;
 
 			case ERROR:
-
 				//handleError();
 				state = RESET;
 				break;

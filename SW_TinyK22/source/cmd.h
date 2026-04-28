@@ -19,6 +19,7 @@ bool cmdStart(void);
 bool processCmd(void);
 bool getCmd(void);
 bool resetSystem(void);
+void getSw(void);
 
 #endif /* SOURCES_CMD_H_ */
 

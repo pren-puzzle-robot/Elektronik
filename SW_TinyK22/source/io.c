@@ -10,20 +10,6 @@
 
 #if !SOLUTION
 
-
-void delay_ms(uint32_t ms)
-{
-    volatile uint32_t i;
-
-    while (ms--)
-    {
-        for (i = 0; i < 21; i++)
-        {
-            __NOP();
-        }
-    }
-}
-
 void setSolenoid(bool state)
 {
     if (state)
@@ -88,6 +74,7 @@ bool btnNegFlank(void)
 /**
  * Initializes digital IOs
  */
+
 void ioInit(void)
 {
   SIM->SCGC5 |= SIM_SCGC5_PORTC_MASK;
@@ -99,27 +86,48 @@ void ioInit(void)
   //PORTD->PCR[6] = PORT_PCR_MUX(1); // valve
   PORTD->PCR[7] = PORT_PCR_MUX(1); // solenoid
 
-  GPIOC->PDDR |= (1 << 2);
-  GPIOD->PDDR |= (1 << 3) | (1 << 6) | (1 << 7);
+  GPIOD->PDDR |= (1 << 3) | (1 << 7);
+  //GPIOD->PDDR |=(1 << 6)
 
   //input
-  PORTC->PCR[8]  |= PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK; // button
-  PORTC->PCR[9]   = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_IRQC(0xA); // swX0 falling edge
-  PORTC->PCR[10]  = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_IRQC(0xA); // swY0 falling edge
-  PORTB->PCR[0]   = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_IRQC(0xA); // swXEnd falling edge
-  PORTB->PCR[1]   = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_IRQC(0xA);  // swYEnd falling edge
-  PORTB->PCR[2]   = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_IRQC(0x9); // V_24V rising edge
+  //PORTB->PCR[2]   = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_IRQC(0x9); // V_24V rising edge
+
+  PORTC->PCR[8] = PORT_PCR_MUX(1)		//start button
+				  | PORT_PCR_PE_MASK
+				  | PORT_PCR_PS_MASK;
+
+  PORTC->PCR[9] = PORT_PCR_MUX(1)
+                | PORT_PCR_PE_MASK
+                | PORT_PCR_PS_MASK
+                | PORT_PCR_IRQC(0xA);   // X0 falling edge
+
+  PORTC->PCR[10] = PORT_PCR_MUX(1)
+                 | PORT_PCR_PE_MASK
+                 | PORT_PCR_PS_MASK
+                 | PORT_PCR_IRQC(0xA);  // Y0 falling edge
+
+  PORTB->PCR[0] = PORT_PCR_MUX(1)
+                | PORT_PCR_PE_MASK
+                | PORT_PCR_PS_MASK
+                | PORT_PCR_IRQC(0xA);   // XEnd falling edge
+
+  PORTB->PCR[1] = PORT_PCR_MUX(1)
+                | PORT_PCR_PE_MASK
+                | PORT_PCR_PS_MASK
+                | PORT_PCR_IRQC(0xA);   // YEnd falling edge
 
   GPIOC->PDDR &= ~(1 << 8);
   GPIOC->PDDR &= ~(1 << 9);
   GPIOC->PDDR &= ~(1 << 10);
-  GPIOC->PDDR &= ~(1 << 11);
+  GPIOB->PDDR &= ~(1 << 0);
+  GPIOB->PDDR &= ~(1 << 1);
 
-  PORTC->ISFR = (1u << 9) | (1u << 10);
+  PORTC->ISFR = 0xFFFFFFFF;
+  PORTB->ISFR = 0xFFFFFFFF;
+
   NVIC_ClearPendingIRQ(PORTC_IRQn);
   NVIC_EnableIRQ(PORTC_IRQn);
 
-  PORTB->ISFR = (1u << 0) | (1u << 1) | (1u << 2);
   NVIC_ClearPendingIRQ(PORTB_IRQn);
   NVIC_EnableIRQ(PORTB_IRQn);
 }

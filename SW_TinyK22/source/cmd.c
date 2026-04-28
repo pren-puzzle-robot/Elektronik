@@ -36,6 +36,14 @@ static uint16_t abs16(int value) //absolute value of int
     return (uint16_t)value;
 }
 
+void delay_ms(uint32_t ms){
+
+    volatile uint32_t i;
+    while (ms--){
+        for (i = 0; i < 21; i++){
+            __NOP();
+}}}
+
 bool getCmd(void){
 
 	if (PLATFORM == RASPY)
@@ -74,13 +82,16 @@ bool getCmd(void){
 
 bool processCmd(void){
 	char str[50]; //will be removed
-	if (cmd == 'M' && !motorBusy()){
-		motorDrive(MOTOR_Y, F_NOM, (abs16(y_rel)*10), (y_rel < 0));
-		motorDrive(MOTOR_X, F_NOM, (abs16(x_rel)*10), (x_rel < 0));
+	static bool cmdStarted = FALSE;
+
+	if (cmd == 'M' && !cmdStarted){
+		cmdStarted = TRUE;
+		motorDrive(MOTOR_Y, F_NOM, (abs16(y_rel)), (y_rel < 0));
+		motorDrive(MOTOR_X, F_NOM, (abs16(x_rel)), (x_rel < 0));
 		motorDrive(MOTOR_ROT, F_NOM, (abs16(rot_rel)), (rot_rel < 0));
 
-		snprintf(str, sizeof(str), "x_rel: %d y_rel: %d z_rel: %d\r\n", x_rel, y_rel, rot_rel); //will be removed
-		uart1Write(str); //will be removed
+		//snprintf(str, sizeof(str), "x_rel: %d y_rel: %d z_rel: %d\r\n", x_rel, y_rel, rot_rel); //will be removed
+		//uart1Write(str); //will be removed
 
 		x_abs = x_new;
 		y_abs = y_new;
@@ -98,17 +109,35 @@ bool processCmd(void){
 		setSolenoid(up);
 	if (cmd == 'l')
 		setSolenoid(down);
-	if (cmd == 'R')
-		; //resetSystem();
+	if (cmd == 'R'){
+		while (!(resetSystem())){;}
+	}
 
 	if (motorBusy())
 		return FALSE;
-	else
+	else{
+		cmdStarted = FALSE;
 		return TRUE;
+	}
+
 }
 
 bool cmdStart(void){
 	return btnNegFlank();
+}
+
+void getSw(void){
+	if (getSwXEnd())
+	    motorStop(MOTOR_X);
+
+	if (getSwYEnd())
+	    motorStop(MOTOR_Y);
+
+	if (getSwX0())
+	    motorStop(MOTOR_X);
+
+	if (getSwY0())
+	    motorStop(MOTOR_Y);
 }
 
 void cmdInit(void){
@@ -117,52 +146,20 @@ void cmdInit(void){
 }
 
 bool resetSystem(void){
-	if (getSwX0() && getSwY0())
+	if (getSwX0() && getSwY0() && (rot_abs == 0)){
+		x_abs=0;
+		y_abs=0;
 		return TRUE;
-	else
+	}
+
+	else{
+		motorDrive(MOTOR_Y, F_NOM, (MAX_Y + 100), (1));
+		motorDrive(MOTOR_X, F_NOM, (MAX_X + 100), (1));
+		rot_new = 0;
+		rot_rel = rot_new - rot_abs;
+		motorDrive(MOTOR_ROT, F_NOM, (abs16(rot_rel)), (rot_rel < 0));
+		rot_abs=0;
+
 		return FALSE;
-
-	motorDrive(MOTOR_Y, F_NOM, (MAX_X + 100), (1));
-	motorDrive(MOTOR_X, F_NOM, (MAX_X + 100), (1));
-	rot_new = 0;
-	rot_rel = rot_new - rot_abs;
-	motorDrive(MOTOR_ROT, F_NOM, (abs16(rot_rel)), (rot_rel < 0));
-	rot_abs=0;
-
-}
-
-void PORTC_IRQHandler(void)
-{
-    if (PORTC->ISFR & (1u << 9))
-    {
-        PORTC->ISFR = (1u << 9);
-        motorStop(MOTOR_X);
-        x_abs = 0;
-        x_new = 0;
-        x_rel = 0;
-    }
-
-    if (PORTC->ISFR & (1u << 10))
-    {
-        PORTC->ISFR = (1u << 10);
-        motorStop(MOTOR_Y);
-        y_abs = 0;
-		y_new = 0;
-		y_rel = 0;
-    }
-}
-
-void PORTB_IRQHandler(void)
-{
-    if (PORTB->ISFR & (1u << 0))
-    {
-        PORTB->ISFR = (1u << 0);
-        motorStop(MOTOR_X);
-    }
-
-    if (PORTB->ISFR & (1u << 1))
-    {
-        PORTB->ISFR = (1u << 1);
-        motorStop(MOTOR_Y);
-    }
+	}
 }
