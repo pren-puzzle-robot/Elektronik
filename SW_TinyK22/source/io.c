@@ -64,7 +64,7 @@ bool btnNegFlank(void)
     // neg flank
     if (lastState && !currentState){
         flank = true;
-        delay_ms(300);
+        for (volatile int i = 0; i < 5000; i++);
     }
     lastState = currentState;
 
@@ -83,11 +83,11 @@ void ioInit(void)
 
   //output
   PORTD->PCR[3] = PORT_PCR_MUX(1); // pump
-  //PORTD->PCR[6] = PORT_PCR_MUX(1); // valve
+  PORTD->PCR[6] = PORT_PCR_MUX(1); // valve
   PORTD->PCR[7] = PORT_PCR_MUX(1); // solenoid
 
   GPIOD->PDDR |= (1 << 3) | (1 << 7);
-  //GPIOD->PDDR |=(1 << 6)
+  GPIOD->PDDR |=(1 << 6);
 
   //input
   //PORTB->PCR[2]   = PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_PS_MASK | PORT_PCR_IRQC(0x9); // V_24V rising edge

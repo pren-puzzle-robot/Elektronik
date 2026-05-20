@@ -67,8 +67,8 @@ bool getCmd(void){
 		}
 
 
-		if (rot_new > 800)				//-180° bis 180°
-			rot_new = rot_new -1600;
+		if (rot_new > 1600)				//-180° bis 180°
+			rot_new = rot_new -3200;
 
 		x_rel = x_new - x_abs;
 		y_rel = y_new - y_abs;
@@ -81,14 +81,14 @@ bool getCmd(void){
 }
 
 bool processCmd(void){
-	char str[50]; //will be removed
+	//char str[50]; //will be removed
 	static bool cmdStarted = FALSE;
 
 	if (cmd == 'M' && !cmdStarted){
 		cmdStarted = TRUE;
 		motorDrive(MOTOR_Y, F_NOM, (abs16(y_rel)), (y_rel < 0));
 		motorDrive(MOTOR_X, F_NOM, (abs16(x_rel)), (x_rel < 0));
-		motorDrive(MOTOR_ROT, F_NOM, (abs16(rot_rel)), (rot_rel < 0));
+		motorDrive(MOTOR_ROT, F_NOM_ROT, (abs16(rot_rel)), (rot_rel < 0));
 
 		//snprintf(str, sizeof(str), "x_rel: %d y_rel: %d z_rel: %d\r\n", x_rel, y_rel, rot_rel); //will be removed
 		//uart1Write(str); //will be removed
@@ -99,11 +99,11 @@ bool processCmd(void){
 	}
 	if (cmd == 'H'){
 		setPump(on);
-		setValve(off);
+		setValve(on);
 	}
 	if (cmd == 'h'){
 		setPump(off);
-		setValve(on);
+		setValve(off);
 	}
 	if (cmd == 'L')
 		setSolenoid(up);
@@ -111,6 +111,12 @@ bool processCmd(void){
 		setSolenoid(down);
 	if (cmd == 'R'){
 		while (!(resetSystem())){;}
+	}
+
+	if (errFlag){
+		for (volatile int i = 0; i < 10000; i++);
+		errFlag = FALSE;
+		termWriteChar('E');
 	}
 
 	if (motorBusy())

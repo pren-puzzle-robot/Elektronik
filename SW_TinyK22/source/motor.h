@@ -9,7 +9,10 @@
 #include <stdint.h>
 
 #define F_NOM 4900
+#define F_NOM_ROT 1000
 #define ACC 10
+
+extern volatile bool errFlag;
 
 typedef enum
 {

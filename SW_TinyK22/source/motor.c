@@ -18,6 +18,8 @@
 #define F_MIN 4   // HZ
 #define F_MAX 10000   // HZ
 
+volatile bool errFlag = FALSE;
+
 typedef struct
 {
     uint8_t channel;
@@ -214,6 +216,7 @@ void PORTB_IRQHandler(void)
 
 		if (getSwXEnd() && !(motors[MOTOR_X].dir)){
 			motorStop(MOTOR_X);
+			errFlag = TRUE;
 		}
     }
 
@@ -222,6 +225,7 @@ void PORTB_IRQHandler(void)
 
        if (getSwYEnd() && !(motors[MOTOR_Y].dir)){
 			motorStop(MOTOR_Y);
+			errFlag = TRUE;
 		}
     }
 }

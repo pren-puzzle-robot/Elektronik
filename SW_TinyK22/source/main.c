@@ -36,7 +36,7 @@ int main(void)
 				break;
 
 			case RESET:
-
+				//state = START;
 				// reset and calibrate system
 				if (resetSystem()){
 					state = START;
